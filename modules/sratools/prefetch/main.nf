@@ -22,7 +22,7 @@ process SRATOOLS_PREFETCH {
     val(meta)
 
     output:
-    tuple val(meta), path(meta.id), emit: reads
+    tuple val(meta), path("${meta.id}/"), emit: reads
     path "*.version.txt"          , emit: version
 
     script:
