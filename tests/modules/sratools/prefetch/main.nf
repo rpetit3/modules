@@ -6,7 +6,10 @@ include { SRATOOLS_PREFETCH } from '../../../../modules/sratools/prefetch/main.n
 
 workflow test_sratools_prefetch {
 
-    input = [ id:'ERR2815334', single_end:false ] // meta map
+    input = [
+        [ id:'my_sample', single_end:false ], // meta map
+        'ERR2815334'
+    ]
 
     SRATOOLS_PREFETCH ( input )
 }

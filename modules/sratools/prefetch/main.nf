@@ -5,7 +5,7 @@ params.options = [:]
 options        = initOptions(params.options)
 
 process SRATOOLS_PREFETCH {
-    tag "$meta.id"
+    tag "$id"
     label 'process_low'
     publishDir "${params.outdir}",
         mode: params.publish_dir_mode,
@@ -19,10 +19,10 @@ process SRATOOLS_PREFETCH {
     }
 
     input:
-    val(meta)
+    tuple val(meta), val(id)
 
     output:
-    tuple val(meta), path("${meta.id}/"), emit: reads
+    tuple val(meta), path("$id"), emit: sra
     path "*.version.txt"          , emit: version
 
     script:
@@ -31,7 +31,7 @@ process SRATOOLS_PREFETCH {
     prefetch \\
         --progress \\
         $options.args \\
-        ${meta.id}
+        $id
 
     echo \$(prefetch --version 2>&1) | sed 's/^.*version //; s/.*\$//' > ${software}.version.txt
     """
